@@ -1,0 +1,52 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.suggested table {
+    border: 2px solid black;
+    border-radius: 2px;
+}
+
+.suggested table, thead {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.suggested thead {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.suggested tbody {
+    display: flex;
+    flex-direction: column;
+    max-height: 200px;
+    height: fit-content;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.suggested tr {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    border-bottom: 2px solid black;
+}
+
+.suggested td {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.left {
+    border-left: 2px solid black;
+}
+
+.right {
+    border-right: 2px solid black;
+}

@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import './App.css';
 
+import PokeInput from './components/PokeInput';
+
 function App() {
   const [randomPokemon, setRandomPokemon] = useState(Math.floor(Math.random() * 898) + 1)
 
@@ -14,6 +16,12 @@ function App() {
     stats: undefined
   });
 
+  const [inputPokemon, setInputPokemon] = useState('');
+
+  const [guesses, setGuesses] = useState(0);
+
+  const [guessHistory, setGuessHistory] = useState([]);
+
   const updatePokemon = useCallback((key, values) => {
     setPokemon( prevState => ({
       ...prevState,
@@ -21,11 +29,16 @@ function App() {
     }));
   }, [pokemon]);
 
-  const axios = require('axios').default;
+  const updateInputPokemon = useCallback((pokemon) => {
+    var str = pokemon.replace(/[013456789`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+    setInputPokemon(str);
+  }, [inputPokemon]);
 
   useEffect(() => {
     getPokemonData(randomPokemon);
-  }, [])
+  }, []);
+
+  const axios = require('axios');
 
   const getPokemonData = (NationalDexNumber) => {
     axios.get('https://pokeapi.co/api/v2/pokemon/' + NationalDexNumber)
@@ -46,6 +59,9 @@ function App() {
                 spdefense: res.data.stats[4].base_stat, 
                 speed: res.data.stats[5].base_stat
             });
+        })
+        .catch(function (e){
+          console.log(e);
         });
     
     axios.get('https://pokeapi.co/api/v2/pokemon-species/' + NationalDexNumber)
@@ -57,12 +73,18 @@ function App() {
             else {
               updatePokemon('evo', 'evolved');
             }
+        })
+        .catch(function (e){
+          console.log(e);
         });
   }
 
   return (
     <div className="App">
-
+      <PokeInput
+        inputPokemon={inputPokemon}
+        updateInputPokemon={updateInputPokemon}
+      />
     </div>
   );
 }

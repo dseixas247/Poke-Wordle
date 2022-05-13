@@ -1,4 +1,21 @@
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: black;
+}
+
+::-webkit-scrollbar-thumb {
+  background: white;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
 .App {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 100px;
   text-align: center;
 }
 

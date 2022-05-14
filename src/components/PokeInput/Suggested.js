@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import styles from './styles.module.scss';
 
-function Suggested({content}) {
+import TypeIcon from '../TypeIcon/index.js';
+
+function Suggested({content, updateInputPokemon}) {
     const axios = require('axios');
 
     const [data, setData] = useState([]);
@@ -12,46 +14,51 @@ function Suggested({content}) {
 
     async function getData() {
         var pokemons = []
-        for (const item of content){
-            await axios.get(item)
-            .then(function (res){
-                pokemons.push(res.data);
-            })
-            .catch(function (e){
-                console.log(e);
-            });
-        };
+        if(content.length > 0){
+            for (const item of content){
+                await axios.get(item)
+                .then(function (res){
+                    pokemons.push(res.data);
+                })
+                .catch(function (e){
+                    console.log(e);
+                });
+            };   
+        }
         setData(pokemons);
     } 
-    
+
     const suggestedContent = data.map((item, key) => {
         return(
-            <tr key={key}>
-                <td className={styles.right}>
+            <tr key={key} onClick={() => updateInputPokemon(item.name)}>
+                <td>
                     <img src={item.sprites.front_default}/>
                 </td>
-                <td className={styles.right}>
-                    {item.name}
+                <td>
+                    {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
                 </td>
-                <td className={styles.right}>
-                    {`${item.types.length == 2 ? item.types[0].type.name + '' + item.types[1].type.name : item.types[0].type.name}`}
+                <td>
+                    <div className={styles.types}>
+                        <TypeIcon type={item.types[0].type.name}/>
+                        {item.types.length == 2 && <TypeIcon type={item.types[1].type.name}/>}
+                    </div>
                 </td>
-                <td className={styles.right}>
+                <td>
                     {item.stats[0].base_stat}
                 </td>
                 <td>
                     {item.stats[1].base_stat}
                 </td>
-                <td className={styles.left}>
+                <td>
                     {item.stats[2].base_stat}
                 </td>
-                <td className={styles.left}>
+                <td>
                     {item.stats[3].base_stat}
                 </td>
-                <td className={styles.left}>
+                <td>
                     {item.stats[4].base_stat}
                 </td>
-                <td className={styles.left}>
+                <td>
                     {item.stats[5].base_stat}
                 </td>
             </tr>
@@ -59,40 +66,40 @@ function Suggested({content}) {
     });
 
     return(
-        <div className={styles.suggested}>
+        <div className={`${styles.suggested} ${data.length == 0 ? styles.closed : styles.open}`}>
                 <table>
-                    <thead>
+                    <thead className={styles.head}>
                         <tr>
-                            <td className={styles.right}>
+                            <td>
                                 Sprite
                             </td>
-                            <td className={styles.right}>
+                            <td>
                                 Name
                             </td>
-                            <td className={styles.right}>
+                            <td>
                                 Type
                             </td>
-                            <td className={styles.right}>
+                            <td>
                                 HP
                             </td>
                             <td>
                                 Attack
                             </td>
-                            <td className={styles.left}>
+                            <td>
                                 Defense
                             </td>
-                            <td className={styles.left}>
+                            <td>
                                 Sp. Attack
                             </td>
-                            <td className={styles.left}>
+                            <td>
                                 Sp. Defense
                             </td>
-                            <td className={styles.left}>
+                            <td>
                                 Speed
                             </td>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className={styles.body}>
                         {suggestedContent}
                     </tbody>
                 </table>

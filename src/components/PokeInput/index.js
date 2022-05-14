@@ -36,12 +36,16 @@ function PokeInput({inputPokemon, updateInputPokemon}) {
         setSuggestions(newList);
     }, [inputPokemon]);
     
+    const submit = (pokemon) => {
+        console.log(pokemon)
+    }
+
     return(
         <div className={styles.container}>
-            <Suggested content={suggestions}/>
+            <Suggested content={suggestions} updateInputPokemon={updateInputPokemon}/>
                 
-            <input type='text' value={inputPokemon} onChange={e => updateInputPokemon(e.target.value)}/>
-            <button>Go</button>
+            <input className={styles.input} type='text' value={inputPokemon} onChange={e => updateInputPokemon(e.target.value)}/>
+            <button onClick={() => submit(inputPokemon)}>Submit</button>
         </div>
         
     )

@@ -3,9 +3,32 @@
     flex-direction: column;
 }
 
-.suggested table {
+.input {
+    text-align: center;
+    outline: none;
     border: 2px solid black;
-    border-radius: 2px;
+    border-top: none;
+    border-radius: 0px 0px 2px 2px;
+}
+
+.suggested {
+    overflow: hidden;
+}
+
+.closed {
+    max-height: 4px;
+    transition: max-height 2s;
+}
+
+.open {
+    max-height: 300px;
+    transition: max-height 2s;
+}
+
+.suggested table {
+    background-color: gray;
+    border: 2px solid black;
+    border-radius: 5px 5px 0px 0px;
 }
 
 .suggested table, thead {
@@ -33,20 +56,50 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
-    border-bottom: 2px solid black;
 }
 
 .suggested td {
     display: flex;
+    padding: 0px;
     justify-content: center;
     align-items: center;
     width: 100%;
+    min-width: 94px;
+    overflow-wrap: break-word;
 }
 
-.left {
-    border-left: 2px solid black;
+.head tr {
+    color: white;
+    font-weight: bold;
+    height: fit-content;
 }
 
-.right {
-    border-right: 2px solid black;
+.head td {
+    padding-bottom: 4px;
+    margin: 2px;
+    border-radius: 5px;
+    background-color: red;
+}
+
+.body {
+    font-weight: bold;
+}
+
+.body td {
+    height: 100px;
+    margin: 2px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.body tr:hover {
+    cursor: pointer;
+    background-color: gainsboro;
+}
+
+.types {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

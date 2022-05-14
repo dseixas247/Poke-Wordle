@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 
 import Suggested from './Suggested';
 
-function PokeInput({inputPokemon, updateInputPokemon}) {
+function PokeInput({pokemon, inputPokemon, updateInputPokemon, updateGuessHistory}) {
     const axios = require('axios');
 
     const [pokemonList, setPokemonList] = useState([]);
@@ -21,7 +21,6 @@ function PokeInput({inputPokemon, updateInputPokemon}) {
     }, [1]);
 
     useEffect(() => {
-        console.log(inputPokemon);
         var newList = [];
 
         if(inputPokemon.length >= 2){
@@ -36,16 +35,12 @@ function PokeInput({inputPokemon, updateInputPokemon}) {
         setSuggestions(newList);
     }, [inputPokemon]);
     
-    const submit = (pokemon) => {
-        console.log(pokemon)
-    }
-
     return(
         <div className={styles.container}>
             <Suggested content={suggestions} updateInputPokemon={updateInputPokemon}/>
                 
             <input className={styles.input} type='text' value={inputPokemon} onChange={e => updateInputPokemon(e.target.value)}/>
-            <button onClick={() => submit(inputPokemon)}>Submit</button>
+            <button onClick={() => {if(inputPokemon != '') updateGuessHistory(inputPokemon, pokemon)}}>Submit</button>
         </div>
         
     )

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import './App.css';
 
+import PokeGuess from './components/PokeGuess';
 import PokeInput from './components/PokeInput';
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         history.push(comparePokemon(res, pokemon));
         updateGuesses();
         setGuessHistory(history);
+        updateInputPokemon("");
       }
     });
   }, [guessHistory])
@@ -109,7 +111,6 @@ function App() {
   }
 
   const comparePokemon = (guessedPokemon, pokemon) => {   
-    console.log(pokemon); 
     if(guessedPokemon.name == pokemon.name) {
       return({
         pokemon: guessedPokemon.name,
@@ -186,6 +187,7 @@ function App() {
   
       return({
         pokemon: guessedPokemon.name,
+        sprite: guessedPokemon.sprite,
         gen: gen,
         type1: type1,
         type2: type2,
@@ -196,8 +198,9 @@ function App() {
 
   return (
     <div className="App">
-      <div>
-      </div>
+      <PokeGuess
+        guessHistory={guessHistory}
+      />
       <PokeInput
         pokemon={pokemon}
         inputPokemon={inputPokemon}

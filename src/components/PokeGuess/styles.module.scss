@@ -1,0 +1,76 @@
+.guessTable table {
+    background-color: gray;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.guessTable table, thead {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.guessTable thead {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.guessTable tbody {
+    display: flex;
+    flex-direction: column;
+    max-height: 40vh;
+    height: fit-content;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.guessTable tr {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.guessTable td {
+    display: flex;
+    padding: 0px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-width: 94px;
+    overflow-wrap: break-word;
+}
+
+.head tr {
+    color: white;
+    font-weight: bold;
+    height: fit-content;
+}
+
+.head td {
+    padding-bottom: 4px;
+    margin: 2px;
+    border-radius: 5px;
+    background-color: red;
+}
+
+.body {
+    font-weight: bold;
+}
+
+.body td {
+    height: 100px;
+    margin: 2px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.pokemon {
+    display: flex;
+    flex-direction: column;
+}
+
+.pokemon img {
+    height: 75px;
+    object-fit: contain;
+}

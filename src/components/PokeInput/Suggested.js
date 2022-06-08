@@ -6,13 +6,24 @@ import TypeIcon from '../TypeIcon/index.js';
 function Suggested({loaded, input, focus, content, updateInputPokemon}) {
 
     const suggestedContent = content.map((item, key) => {
+        var name = "";
+        var names = item.name.split('-');
+        
+        for(let i = 0; i < names.length; i++){
+            names[i] = `${names[i][0].split(0).toString().toUpperCase() + names[i].slice(1)}${i == (names.length-1) ? '' : ' '}`
+        };
+
+        for(let i = 0; i < names.length; i++){
+            name = name + names[i];
+        };
+
         return(
             <tr key={key} onClick={() => updateInputPokemon(item.name)}>
                 <td>
                     <img src={item.sprites.front_default}/>
                 </td>
                 <td>
-                    {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
+                    {name}
                 </td>
                 <td>
                     <div className={styles.types}>

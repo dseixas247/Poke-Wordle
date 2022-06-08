@@ -4,11 +4,22 @@ import GuessIcon from '../GuessIcon/index.js';
 function PokeGuess({guessHistory}) {
 
     const content = guessHistory.map((item, key) =>{
+        var name = "";
+        var names = item.pokemon.split('-');
+        
+        for(let i = 0; i < names.length; i++){
+            names[i] = `${names[i][0].split(0).toString().toUpperCase() + names[i].slice(1)}${i == (names.length-1) ? '' : ' '}`
+        };
+
+        for(let i = 0; i < names.length; i++){
+            name = name + names[i];
+        };
+
         return(
             <tr key={key}>
                 <td className={styles.pokemon}>
                     <img src={item.sprite}/>
-                    {item.pokemon.charAt(0).toUpperCase() + item.pokemon.slice(1)}
+                    {name}
                 </td>
                 <td>
                     <GuessIcon value={item.gen}/>

@@ -68,6 +68,8 @@
 .pokemon {
     display: flex;
     flex-direction: column;
+    font-size: small;
+    line-height: 12px;
 }
 
 .pokemon img {

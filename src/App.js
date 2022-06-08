@@ -124,7 +124,6 @@ function App() {
                         console.log(e);
                     });
                 }
-                else{console.log(item.name)}
             };   
         }
         return(list);
@@ -293,8 +292,6 @@ function App() {
       });
     }
   }
-
-  console.log(pokemonList.length, pokemon);
 
   return (
     <div className="App">

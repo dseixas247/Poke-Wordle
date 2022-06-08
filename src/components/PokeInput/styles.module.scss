@@ -7,8 +7,44 @@
     text-align: center;
     outline: none;
     border: 2px solid black;
-    border-top: none;
-    border-radius: 0px 0px 2px 2px;
+    border-top: 1px solid black;
+    border-radius: 0px 0px 4px 4px;
+}
+
+.button {
+    margin-top: 5px;
+    padding-bottom: 3px;
+    text-align: center;
+    user-select: none;
+    color: white;
+    font-weight: bold;
+    background-color: red;
+    border: 2px solid black;
+    border-radius: 4px 4px 4px 4px;
+
+    transition: background-color 1s;
+}
+
+.button:hover {
+    cursor: pointer;
+    background-color: rgb(228, 32, 32);
+    transition: background-color 1s;
+}
+
+.button:active {
+    background-color: rgb(180, 0, 0);
+    transition: none;
+}
+
+.inactive {
+    border: 2px solid rgba(0, 0, 0, 0.25);
+    background-color: rgba(128, 128, 128, 0.25);
+}
+
+.inactive:hover, .inactive:active {
+    cursor: default;
+    border: 2px solid rgba(0, 0, 0, 0.25);
+    background-color: rgba(128, 128, 128, 0.25);
 }
 
 .suggested {
@@ -99,7 +135,13 @@
 
 .body tr:hover {
     cursor: pointer;
-    background-color: gainsboro;
+    background-color: rgb(228, 32, 32);
+    transition: background-color 1s;
+}
+
+.body tr:active {
+    background-color: rgb(180, 0, 0);
+    transition: none;
 }
 
 .types {

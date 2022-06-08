@@ -3,44 +3,31 @@ import styles from './styles.module.scss';
 
 import Suggested from './Suggested';
 
-function PokeInput({pokemon, inputPokemon, updateInputPokemon, updateGuessHistory}) {
-    const axios = require('axios');
+function PokeInput({loaded, pokemonList, pokemon, inputPokemon, updateInputPokemon, updateGuessHistory}) {
 
-    const [pokemonList, setPokemonList] = useState([]);
+    const [focus, setFocus] = useState(false);
 
     const [suggestions, setSuggestions] = useState([]);
 
     useEffect(() => {
-        axios.get('https://pokeapi.co/api/v2/pokemon?limit=898')
-            .then(function (res){
-                setPokemonList(res.data.results);
-            })
-            .catch(function (e){
-                console.log(e);
-            });
-    }, [1]);
-
-    useEffect(() => {
         var newList = [];
 
-        if(inputPokemon.length >= 2){
-            pokemonList.map((item) => {
-                var regex = new RegExp("^" + inputPokemon.toLowerCase(), 'i');
-                if (regex.test(item.name)){
-                    newList.push(item.url);
-                }
-            })
-        }
+        pokemonList.map((item) => {
+            var regex = new RegExp("^" + inputPokemon.toLowerCase(), 'i');
+            if (regex.test(item.name)){
+                newList.push(item);
+            }
+        })
         
         setSuggestions(newList);
-    }, [inputPokemon]);
+    }, [inputPokemon, loaded]);
     
     return(
         <div className={styles.container}>
-            <Suggested content={suggestions} updateInputPokemon={updateInputPokemon}/>
+            <Suggested loaded={loaded} input={inputPokemon.length != 0} focus={focus} content={suggestions} updateInputPokemon={updateInputPokemon}/>
                 
-            <input className={styles.input} type='text' value={inputPokemon} onChange={e => updateInputPokemon(e.target.value)}/>
-            <button onClick={() => {if(inputPokemon != '') updateGuessHistory(inputPokemon, pokemon)}}>Submit</button>
+            <input className={styles.input} type='text' value={inputPokemon} onFocus={() => setFocus(true)} onBlur={() => setFocus(false)} onChange={e => updateInputPokemon(e.target.value)}/>
+            <button onClick={() => {if(inputPokemon != '' && pokemon != undefined){updateGuessHistory(inputPokemon, pokemon)}}}>Submit</button>
         </div>
         
     )

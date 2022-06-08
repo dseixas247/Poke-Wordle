@@ -15,6 +15,11 @@
     overflow: hidden;
 }
 
+.loading {
+    max-height: 300px;
+    transition: max-height 2s;
+}
+
 .closed {
     max-height: 4px;
     transition: max-height 2s;

@@ -5,7 +5,11 @@ import PokeGuess from './components/PokeGuess';
 import PokeInput from './components/PokeInput';
 
 function App() {
-  const [randomPokemon, setRandomPokemon] = useState(Math.floor(Math.random() * 898) + 1)
+  const [loaded, setLoaded] = useState(false);
+
+  const [pokemonList, setPokemonList] = useState([]);
+
+  const [randomPokemon, setRandomPokemon] = useState(Math.floor(Math.random() * 1032))
 
   const [pokemon, setPokemon] = useState(undefined);
 
@@ -20,7 +24,7 @@ function App() {
   }, [pokemon]);
 
   const updateInputPokemon = useCallback((pokemon) => {
-    var str = pokemon.replace(/[013456789`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+    var str = pokemon.replace(/[013456789`~!@#$%^&*()_|+\=?;:'",.<>\{\}\[\]\\\/]/gi, '');
     setInputPokemon(str);
   }, [inputPokemon]);
 
@@ -41,12 +45,100 @@ function App() {
   }, [guessHistory])
 
   useEffect(() => {
-    getPokemonData(randomPokemon).then(res => {updatePokemon(res)});
-  }, []);
+    if(loaded){
+      getPokemonData(pokemonList[randomPokemon].name).then(res => {updatePokemon(res)});
+    }
+  }, [loaded]);
+
+  useEffect(() => {
+    const getAll = async() => {
+        await axios.get('https://pokeapi.co/api/v2/pokemon?limit=1126')
+        .then(async function (res){
+            await getData(res.data.results).then(res => {
+                setPokemonList(res);
+                setLoaded(true);
+            });
+        })
+        .catch(function (e){
+            console.log(e);
+        });
+    }
+
+    const getData = async(all) => {
+        var list = []
+        if(all.length > 0){
+            for (const item of all){
+                if(
+                    !item.name.includes("-") 
+                    || item.name.endsWith("-alola")
+                    || item.name.includes("-galar")
+                    || item.name.includes("-mega")
+                    || item.name.includes("-primal")
+                    || item.name.includes("deoxys")
+                    || item.name.includes("calyrex")
+                    || item.name.includes("eiscue")
+                    || item.name.includes("hoopa")
+                    || item.name.includes("-complete")
+                    || item.name.includes("-crowned")
+                    || item.name.includes("darmanitan")
+                    || item.name.includes("necrozma")
+                    || item.name.includes("kyurem")
+                    || item.name.includes("-average")
+                    || item.name.includes("keldeo")
+                    || item.name.includes("aegislash")
+                    || item.name.includes("-therian")
+                    || item.name.includes("-incarnate")
+                    || item.name.includes("wormadam")
+                    || item.name.includes("shaymin")
+                    || item.name.includes("giratina")
+                    || item.name.includes("rotom")
+                    || item.name.includes("castform")
+                    || item.name.includes("meloetta")
+                    || item.name.includes("oricorio")
+                    || item.name.includes("lycanroc")
+                    || item.name.includes("wishiwashi")
+                    || item.name.includes("eiscue")
+                    || item.name.endsWith("-strike")
+                    || item.name.endsWith("u-disguised")
+                    || item.name.includes("nidoran")
+                    || item.name.endsWith("-50")
+                    || item.name.includes("-10-")
+                    || item.name.endsWith("-amped")
+                    || item.name.includes("indeedee")
+                    || item.name.includes("-red")
+                    || item.name.includes("tapu")
+                    || item.name.includes("o-o")
+                    || item.name.includes("mime")
+                    || item.name.includes("mr-rime")
+                    || item.name.includes("porygon")
+                    || item.name.includes("-crowned")
+                    || item.name.includes("meowstic-male")
+                    || item.name.includes("type-null")
+                    || item.name.endsWith("-belly")
+                ){
+                    await axios.get(item.url)
+                    .then(function (res){
+                        list.push(res.data);
+                    })
+                    .catch(function (e){
+                        console.log(e);
+                    });
+                }
+                else{console.log(item.name)}
+            };   
+        }
+        return(list);
+    } 
+
+    getAll()
+    
+}, [1]);
 
   const axios = require('axios');
 
   async function getPokemonData(Pokemon) {
+    var error = false;
+
     var name = '';
     var sprite = '';
     var type1 = '';
@@ -78,10 +170,10 @@ function App() {
         })
         .catch(function (e){
           console.log(e);
-          return(undefined);
+          error = true;
         });
     
-    await axios.get('https://pokeapi.co/api/v2/pokemon-species/' + Pokemon)
+    await axios.get('https://pokeapi.co/api/v2/pokemon-species/' + Pokemon.split("-")[0])
         .then(function (res) {
             gen = res.data.generation.name;
             switch(gen){
@@ -97,17 +189,23 @@ function App() {
         })
         .catch(function (e){
           console.log(e);
-          return(undefined);
+          error = true;
         });
 
-    return Promise.resolve({
-      name: name,
-      sprite: sprite,
-      gen: gen,
-      type1: type1,
-      type2: type2,
-      stats: stats
-    });
+    if(!error){
+      return Promise.resolve({
+        name: name,
+        sprite: sprite,
+        gen: gen,
+        type1: type1,
+        type2: type2,
+        stats: stats
+      });
+    }
+    else{
+      return Promise.resolve(undefined);
+    }
+    
   }
 
   const comparePokemon = (guessedPokemon, pokemon) => {   
@@ -196,12 +294,16 @@ function App() {
     }
   }
 
+  console.log(pokemonList.length, pokemon);
+
   return (
     <div className="App">
       <PokeGuess
         guessHistory={guessHistory}
       />
       <PokeInput
+        loaded={loaded}
+        pokemonList={pokemonList}
         pokemon={pokemon}
         inputPokemon={inputPokemon}
         updateInputPokemon={updateInputPokemon}

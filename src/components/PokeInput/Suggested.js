@@ -1,34 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styles from './styles.module.scss';
 
 import TypeIcon from '../TypeIcon/index.js';
 
-function Suggested({content, updateInputPokemon}) {
-    const axios = require('axios');
+function Suggested({loaded, input, focus, content, updateInputPokemon}) {
 
-    const [data, setData] = useState([]);
-
-    useEffect(() => {
-        getData();
-    }, [content])
-
-    async function getData() {
-        var pokemons = []
-        if(content.length > 0){
-            for (const item of content){
-                await axios.get(item)
-                .then(function (res){
-                    pokemons.push(res.data);
-                })
-                .catch(function (e){
-                    console.log(e);
-                });
-            };   
-        }
-        setData(pokemons);
-    } 
-
-    const suggestedContent = data.map((item, key) => {
+    const suggestedContent = content.map((item, key) => {
         return(
             <tr key={key} onClick={() => updateInputPokemon(item.name)}>
                 <td>
@@ -65,8 +42,11 @@ function Suggested({content, updateInputPokemon}) {
         );
     });
 
+    useEffect(() => {
+    }, [loaded, focus]);
+    
     return(
-        <div className={`${styles.suggested} ${data.length == 0 ? styles.closed : styles.open}`}>
+        <div className={`${styles.suggested} ${!input && !focus ? styles.closed : styles.open}`}>
                 <table>
                     <thead className={styles.head}>
                         <tr>
@@ -100,6 +80,20 @@ function Suggested({content, updateInputPokemon}) {
                         </tr>
                     </thead>
                     <tbody className={styles.body}>
+                        {!loaded && 
+                            <tr>
+                                <td>
+                                    loading
+                                </td>
+                            </tr>
+                        }
+                        {(loaded && input && content.length == 0) && 
+                            <tr>
+                                <td>
+                                    no pokemon found with that name
+                                </td>
+                            </tr>
+                        }
                         {suggestedContent}
                     </tbody>
                 </table>

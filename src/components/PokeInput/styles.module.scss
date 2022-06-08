@@ -144,6 +144,25 @@
     transition: none;
 }
 
+.message {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+}
+
+.message:hover {
+    cursor: default !important;
+    background-color: gray !important;
+}
+
+.message:active {
+    background-color: gray !important;
+}
+
+.message td {
+    height: 100%;
+}
+
 .types {
     width: 100%;
     display: flex;

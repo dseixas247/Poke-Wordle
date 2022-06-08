@@ -46,7 +46,7 @@ function Suggested({loaded, input, focus, content, updateInputPokemon}) {
     }, [loaded, focus]);
     
     return(
-        <div className={`${styles.suggested} ${!input && !focus ? styles.closed : styles.open}`}>
+        <div className={`${styles.suggested} ${focus ? styles.open : styles.closed}`}>
                 <table>
                     <thead className={styles.head}>
                         <tr>
@@ -81,14 +81,14 @@ function Suggested({loaded, input, focus, content, updateInputPokemon}) {
                     </thead>
                     <tbody className={styles.body}>
                         {!loaded && 
-                            <tr>
+                            <tr className={styles.message}>
                                 <td>
                                     loading
                                 </td>
                             </tr>
                         }
                         {(loaded && input && content.length == 0) && 
-                            <tr>
+                            <tr className={styles.message}>
                                 <td>
                                     no pokemon found with that name
                                 </td>

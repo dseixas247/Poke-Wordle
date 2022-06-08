@@ -24,7 +24,7 @@
     border: 2px solid black;
     border-radius: 4px 4px 4px 4px;
 
-    transition: background-color 1s;
+    transition: all 1s;
 }
 
 .button:hover {
@@ -39,14 +39,15 @@
 }
 
 .inactive {
-    border: 2px solid rgba(0, 0, 0, 0.25);
-    background-color: rgba(128, 128, 128, 0.25);
+    color: rgba(255, 255, 255, 0.4);
+    border: 2px solid rgba(0, 0, 0, 0.4);
+    background-color: rgba(128, 128, 128, 0.4);
 }
 
 .inactive:hover, .inactive:active {
     cursor: default;
-    border: 2px solid rgba(0, 0, 0, 0.25);
-    background-color: rgba(128, 128, 128, 0.25);
+    border: 2px solid rgba(0, 0, 0, 0.4);
+    background-color: rgba(128, 128, 128, 0.4);
 }
 
 .suggested {
@@ -54,7 +55,7 @@
 }
 
 .suggested table {
-    background-color: gray;
+    background-color: rgba(128, 128, 128, 0.6);
     border: 2px solid black;
     border-radius: 5px 5px 0px 0px;
     padding-right: 2px;
@@ -74,8 +75,7 @@
 .suggested tbody {
     display: flex;
     flex-direction: column;
-    max-height: 29vh;
-    height: fit-content;
+    height: 29vh;
     width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -141,11 +141,11 @@
 
 .message:hover, .loading:hover {
     cursor: default !important;
-    background-color: gray !important;
+    background-color: rgba(128, 128, 128, 0.6) !important;
 }
 
 .message:active, .loading:active {
-    background-color: gray !important;
+    background-color: rgba(128, 128, 128, 0.6) !important;
 }
 
 .message td, .loading td {

@@ -5,8 +5,6 @@ import Suggested from './Suggested';
 
 function PokeInput({loaded, pokemonList, pokemon, inputPokemon, updateInputPokemon, updateGuessHistory}) {
 
-    const [focus, setFocus] = useState(false);
-
     const [validInput, setValidInput] = useState(false);
 
     const [suggestions, setSuggestions] = useState([]);
@@ -33,9 +31,9 @@ function PokeInput({loaded, pokemonList, pokemon, inputPokemon, updateInputPokem
     
     return(
         <div className={styles.container}>
-            <Suggested loaded={loaded} input={inputPokemon.length != 0} focus={focus} content={suggestions} updateInputPokemon={updateInputPokemon}/>
+            <Suggested loaded={loaded} input={inputPokemon.length != 0} content={suggestions} updateInputPokemon={updateInputPokemon}/>
                 
-            <input className={styles.input} type='text' value={inputPokemon} onFocus={() => setFocus(true)} onBlur={() => setFocus(false)} onChange={e => updateInputPokemon(e.target.value)}/>
+            <input className={styles.input} type='text' value={inputPokemon} onChange={e => updateInputPokemon(e.target.value)}/>
             <div className={`${styles.button} ${!validInput || pokemon == undefined ? styles.inactive : ""}`} onClick={() => {if(validInput && pokemon != undefined){updateGuessHistory(inputPokemon, pokemon)}}}>Submit</div>
         </div>
         

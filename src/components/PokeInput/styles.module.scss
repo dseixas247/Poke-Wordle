@@ -4,6 +4,7 @@
 }
 
 .input {
+    font-size: 15px;
     text-align: center;
     outline: none;
     border: 2px solid black;
@@ -52,25 +53,11 @@
     overflow: hidden;
 }
 
-.loading {
-    max-height: 300px;
-    transition: max-height 2s;
-}
-
-.closed {
-    max-height: 4px;
-    transition: max-height 2s;
-}
-
-.open {
-    max-height: 300px;
-    transition: max-height 2s;
-}
-
 .suggested table {
     background-color: gray;
     border: 2px solid black;
     border-radius: 5px 5px 0px 0px;
+    padding-right: 2px;
 }
 
 .suggested table, thead {
@@ -87,11 +74,12 @@
 .suggested tbody {
     display: flex;
     flex-direction: column;
-    max-height: 200px;
+    max-height: 29vh;
     height: fit-content;
     width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
+    padding-right: 1px;
 }
 
 .suggested tr {
@@ -145,33 +133,34 @@
     transition: none;
 }
 
-.message {
+.message, .loading{
     display: flex;
     flex-direction: column;
-    height: 300px;
+    height: 29vh;
 }
 
-.message:hover {
+.message:hover, .loading:hover {
     cursor: default !important;
     background-color: gray !important;
 }
 
-.message:active {
+.message:active, .loading:active {
     background-color: gray !important;
 }
 
-.message td {
+.message td, .loading td {
     height: 100%;
+    width: 99.7%;
     display: flex;
     flex-direction: column;
 }
 
-.message img {
+.loading img {
     height: 75px;
     animation: spin 2s linear infinite;
 }
 
-.message td::after {
+.loading td::after {
     content: "Loading";
     animation: dots 3s linear infinite;
 }

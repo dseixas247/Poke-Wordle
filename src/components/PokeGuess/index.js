@@ -90,6 +90,13 @@ function PokeGuess({guessHistory}) {
                     </tr>
                 </thead>
                 <tbody className={styles.body}>
+                    {content.length == 0 &&
+                        <tr className={styles.message}>
+                            <td>
+                                Start guessing the pokemon we're looking for
+                            </td>
+                        </tr>
+                    }
                     {content}
                 </tbody>
             </table>

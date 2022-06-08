@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 
 import TypeIcon from '../TypeIcon/index.js';
 
-function Suggested({loaded, input, focus, content, updateInputPokemon}) {
+function Suggested({loaded, input, content, updateInputPokemon}) {
 
     const suggestedContent = content.map((item, key) => {
         var name = "";
@@ -54,10 +54,10 @@ function Suggested({loaded, input, focus, content, updateInputPokemon}) {
     });
 
     useEffect(() => {
-    }, [loaded, focus]);
+    }, [loaded]);
     
     return(
-        <div className={`${styles.suggested} ${focus ? styles.open : styles.closed}`}>
+        <div className={styles.suggested}>
                 <table>
                     <thead className={styles.head}>
                         <tr>
@@ -92,7 +92,7 @@ function Suggested({loaded, input, focus, content, updateInputPokemon}) {
                     </thead>
                     <tbody className={styles.body}>
                         {!loaded && 
-                            <tr className={styles.message}>
+                            <tr className={styles.loading}>
                                 <td>
                                     <img src='./LoadingIcon.png'/>
                                 </td>

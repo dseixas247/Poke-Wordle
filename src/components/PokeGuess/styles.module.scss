@@ -2,6 +2,7 @@
     background-color: gray;
     border: 2px solid black;
     border-radius: 5px;
+    padding-right: 2px;
 }
 
 .guessTable table, thead {
@@ -18,11 +19,11 @@
 .guessTable tbody {
     display: flex;
     flex-direction: column;
-    max-height: 40vh;
-    height: fit-content;
+    height: 44vh;
     width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
+    padding-right: 1px;
 }
 
 .guessTable tr {
@@ -63,6 +64,19 @@
     margin: 2px;
     border-radius: 5px;
     background-color: white;
+}
+
+.message {
+    display: flex;
+    flex-direction: column;
+    height: 44vh;
+}
+
+.message td {
+    height: 100%;
+    width: 99.7%;
+    display: flex;
+    flex-direction: column;
 }
 
 .pokemon {

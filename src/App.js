@@ -11,7 +11,7 @@ function App() {
 
   const [randomPokemon, setRandomPokemon] = useState(Math.floor(Math.random() * 1032))
 
-  const [pokemon, setPokemon] = useState(undefined);
+  const [hiddenPokemon, setHiddenPokemon] = useState(undefined);
 
   const [inputPokemon, setInputPokemon] = useState('');
 
@@ -19,9 +19,9 @@ function App() {
 
   const [guessHistory, setGuessHistory] = useState([]);
 
-  const updatePokemon = useCallback((pokemon) => {
-    setPokemon(pokemon);
-  }, [pokemon]);
+  const updateHiddenPokemon = useCallback((pokemon) => {
+    setHiddenPokemon(pokemon);
+  }, [hiddenPokemon]);
 
   const updateInputPokemon = useCallback((pokemon) => {
     var str = pokemon.replace(/[013456789`~!@#$%^&*()_|+\=?;:'",.<>\{\}\[\]\\\/]/gi, '');
@@ -36,6 +36,7 @@ function App() {
     var history = guessHistory;
     getPokemonData(guessedPokemon).then(res => {
       if(res != undefined){
+        console.log(res);
         history.push(comparePokemon(res, pokemon));
         updateGuesses();
         setGuessHistory(history);
@@ -46,7 +47,7 @@ function App() {
 
   useEffect(() => {
     if(loaded){
-      getPokemonData(pokemonList[randomPokemon].name).then(res => {updatePokemon(res)});
+      getPokemonData(pokemonList[randomPokemon].name).then(res => {updateHiddenPokemon(res)});
     }
   }, [loaded]);
 
@@ -211,6 +212,7 @@ function App() {
     if(guessedPokemon.name == pokemon.name) {
       return({
         pokemon: guessedPokemon.name,
+        sprite: guessedPokemon.sprite,
         gen: 'equal',
         type1: 'equal',
         type2: 'equal',
@@ -235,7 +237,7 @@ function App() {
       }
   
       switch(true){
-        case (guessedPokemon == pokemon.type1): type1 = 'right'; break; 
+        case (guessedPokemon.type1 == pokemon.type1): type1 = 'right'; break; 
         case (guessedPokemon.type1 != pokemon.type1 && guessedPokemon.type1 == pokemon.type2): type1 = 'inside'; break;  
         default: type1 = 'false'; break;
       }
@@ -293,6 +295,8 @@ function App() {
     }
   }
 
+  console.log(hiddenPokemon);
+
   return (
     <div className="App">
       <PokeGuess
@@ -301,7 +305,7 @@ function App() {
       <PokeInput
         loaded={loaded}
         pokemonList={pokemonList}
-        pokemon={pokemon}
+        pokemon={hiddenPokemon}
         inputPokemon={inputPokemon}
         updateInputPokemon={updateInputPokemon}
         updateGuessHistory={updateGuessHistory}

@@ -36,7 +36,7 @@ function PokeInput({loaded, pokemonList, pokemon, inputPokemon, updateInputPokem
             <Suggested loaded={loaded} input={inputPokemon.length != 0} focus={focus} content={suggestions} updateInputPokemon={updateInputPokemon}/>
                 
             <input className={styles.input} type='text' value={inputPokemon} onFocus={() => setFocus(true)} onBlur={() => setFocus(false)} onChange={e => updateInputPokemon(e.target.value)}/>
-            <a className={`${styles.button} ${!validInput || pokemon == undefined ? styles.inactive : ""}`} onClick={() => {if(validInput && pokemon != undefined){updateGuessHistory(inputPokemon, pokemon)}}}>Submit</a>
+            <div className={`${styles.button} ${!validInput || pokemon == undefined ? styles.inactive : ""}`} onClick={() => {if(validInput && pokemon != undefined){updateGuessHistory(inputPokemon, pokemon)}}}>Submit</div>
         </div>
         
     )

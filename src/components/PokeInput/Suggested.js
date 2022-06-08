@@ -83,7 +83,7 @@ function Suggested({loaded, input, focus, content, updateInputPokemon}) {
                         {!loaded && 
                             <tr className={styles.message}>
                                 <td>
-                                    loading
+                                    <img src='./LoadingIcon.png'/>
                                 </td>
                             </tr>
                         }

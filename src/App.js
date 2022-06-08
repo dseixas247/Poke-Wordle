@@ -5,11 +5,13 @@ import PokeGuess from './components/PokeGuess';
 import PokeInput from './components/PokeInput';
 
 function App() {
+  const [background, setBackground] = useState(Math.floor(Math.random() * 9)+55);
+
+  console.log(background)
+
   const [loaded, setLoaded] = useState(false);
 
   const [pokemonList, setPokemonList] = useState([]);
-
-  const [randomPokemon, setRandomPokemon] = useState(Math.floor(Math.random() * 1032))
 
   const [hiddenPokemon, setHiddenPokemon] = useState(undefined);
 
@@ -47,7 +49,7 @@ function App() {
 
   useEffect(() => {
     if(loaded){
-      getPokemonData(pokemonList[randomPokemon].name).then(res => {updateHiddenPokemon(res)});
+      getPokemonData(pokemonList[Math.floor(Math.random() * pokemonList.length)].name).then(res => {updateHiddenPokemon(res)});
     }
   }, [loaded]);
 
@@ -298,18 +300,20 @@ function App() {
   console.log(hiddenPokemon);
 
   return (
-    <div className="App">
-      <PokeGuess
+    <div className="App" style={{backgroundImage: `url('https://tcg.pokemon.com/assets/img/home/wallpapers/wallpaper-${background}.jpg')`}}>
+      <div className='Content'>
+        <PokeGuess
         guessHistory={guessHistory}
-      />
-      <PokeInput
-        loaded={loaded}
-        pokemonList={pokemonList}
-        pokemon={hiddenPokemon}
-        inputPokemon={inputPokemon}
-        updateInputPokemon={updateInputPokemon}
-        updateGuessHistory={updateGuessHistory}
-      />
+        />
+        <PokeInput
+          loaded={loaded}
+          pokemonList={pokemonList}
+          pokemon={hiddenPokemon}
+          inputPokemon={inputPokemon}
+          updateInputPokemon={updateInputPokemon}
+          updateGuessHistory={updateGuessHistory}
+        />
+      </div>
     </div>
   );
 }

@@ -1,13 +1,21 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import styles from './styles.module.scss';
 
 import Suggested from './Suggested';
 
 function PokeInput({loaded, pokemonList, pokemon, inputPokemon, updateInputPokemon, updateGuessHistory}) {
 
+    const input = useRef();
+
     const [validInput, setValidInput] = useState(false);
 
     const [suggestions, setSuggestions] = useState([]);
+
+    useEffect(() => {
+        if(!/Mobi|Android/i.test(navigator.userAgent)) {
+            input.current.focus();
+        }
+    });
 
     useEffect(() => {
         var newList = [];
@@ -33,7 +41,7 @@ function PokeInput({loaded, pokemonList, pokemon, inputPokemon, updateInputPokem
         <div className={styles.container}>
             <Suggested loaded={loaded} input={inputPokemon.length != 0} content={suggestions} updateInputPokemon={updateInputPokemon}/>
                 
-            <input className={styles.input} type='text' value={inputPokemon} onChange={e => updateInputPokemon(e.target.value)} autoFocus/>
+            <input ref={input} className={styles.input} type='text' value={inputPokemon} onChange={e => updateInputPokemon(e.target.value)}/>
             <div className={`${styles.button} ${!validInput || pokemon == undefined ? styles.inactive : ""}`} onClick={() => {if(validInput && pokemon != undefined){updateGuessHistory(inputPokemon, pokemon)}}}>Submit</div>
         </div>
         

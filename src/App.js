@@ -298,6 +298,7 @@ function App() {
     <div className="App" style={{backgroundImage: `url('https://tcg.pokemon.com/assets/img/home/wallpapers/wallpaper-${background}.jpg')`}}>
       <div className='Content'>
         <PokeGuess
+        loaded={loaded}
         guessHistory={guessHistory}
         />
         <PokeInput

@@ -19,10 +19,8 @@ function Suggested({loaded, input, content, updateInputPokemon}) {
 
         return(
             <tr key={key} onClick={() => updateInputPokemon(item.name)}>
-                <td>
+                <td className={styles.pokemon}>
                     <img src={item.sprites.front_default}/>
-                </td>
-                <td>
                     {name}
                 </td>
                 <td>
@@ -62,10 +60,7 @@ function Suggested({loaded, input, content, updateInputPokemon}) {
                     <thead className={styles.head}>
                         <tr>
                             <td>
-                                Sprite
-                            </td>
-                            <td>
-                                Name
+                                Pokemon
                             </td>
                             <td>
                                 Type
@@ -80,10 +75,10 @@ function Suggested({loaded, input, content, updateInputPokemon}) {
                                 Defense
                             </td>
                             <td>
-                                Sp. Attack
+                                Sp. Atk
                             </td>
                             <td>
-                                Sp. Defense
+                                Sp. Def
                             </td>
                             <td>
                                 Speed

@@ -1,7 +1,7 @@
 import styles from './styles.module.scss';
 import GuessIcon from '../GuessIcon/index.js';
 
-function PokeGuess({guessHistory}) {
+function PokeGuess({loaded, guessHistory}) {
 
     const content = guessHistory.map((item, key) =>{
         var name = "";
@@ -79,10 +79,10 @@ function PokeGuess({guessHistory}) {
                             Defense
                         </td>
                         <td>
-                            Sp. Attack
+                            Sp. Atk
                         </td>
                         <td>
-                            Sp. Defense
+                            Sp. Def
                         </td>
                         <td>
                             Speed
@@ -90,7 +90,14 @@ function PokeGuess({guessHistory}) {
                     </tr>
                 </thead>
                 <tbody className={styles.body}>
-                    {content.length == 0 &&
+                    {!loaded &&
+                        <tr className={styles.message}>
+                            <td>
+                                Wait for the application to load all pokemon data
+                            </td>
+                        </tr>
+                    }
+                    {(content.length == 0 && loaded) && 
                         <tr className={styles.message}>
                             <td>
                                 Start guessing the pokemon we're looking for

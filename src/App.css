@@ -5,6 +5,9 @@ html, body, div#root {
   width: 100% !important;
   height: 100% !important;
   z-index: 0;
+  font-size: 20px;
+  color: white;
+  text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 #000, 1px 1px 0 black;
 }
 
 ::-webkit-scrollbar {
@@ -27,6 +30,7 @@ html, body, div#root {
   flex-direction: column;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
 }
 
 .Content {
@@ -36,4 +40,10 @@ html, body, div#root {
   justify-content: space-between;
   margin: 4vh 2vw;
   text-align: center;
+}
+
+@media screen and (max-width: 400px) {
+  .Content {
+    margin: 1vh 1vw;
+  }
 }

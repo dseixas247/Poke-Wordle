@@ -9,6 +9,12 @@
     padding: 0px 4px 4px;
 }
 
+@media screen and (max-width: 925px) {
+    .type {
+        font-size: 16px;
+    }
+}
+
 .normal {
     background: #A8A77A; 
 }

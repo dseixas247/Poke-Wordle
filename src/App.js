@@ -172,7 +172,7 @@ function App() {
           error = true;
         });
     
-    await axios.get('https://pokeapi.co/api/v2/pokemon-species/' + Pokemon.split("-")[0])
+    await axios.get('https://pokeapi.co/api/v2/pokemon-species/' + `${Pokemon.split("-")[0] != "nidoran" ? Pokemon.split("-")[0] : Pokemon}`)
         .then(function (res) {
             gen = res.data.generation.name;
             switch(gen){

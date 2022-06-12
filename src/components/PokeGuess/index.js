@@ -1,7 +1,15 @@
 import styles from './styles.module.scss';
 import GuessIcon from '../GuessIcon/index.js';
+import { useRef } from 'react';
 
 function PokeGuess({loaded, guessHistory}) {
+
+    const headerScroll = useRef();
+    const tableScroll = useRef();
+
+    const onTableScroll = e => {
+        headerScroll.current.scrollLeft = e.target.scrollLeft;
+    };
 
     const content = guessHistory.map((item, key) =>{
         var name = "";
@@ -55,13 +63,13 @@ function PokeGuess({loaded, guessHistory}) {
     return(
         <div className={styles.guessTable}>
             <table>
-                <thead className={styles.head}>
+                <thead ref={headerScroll} className={styles.head}>
                     <tr>
                         <td>
                             Pokemon
                         </td>
                         <td>
-                            Generation
+                            Gen
                         </td>
                         <td>
                             Type 1
@@ -89,7 +97,7 @@ function PokeGuess({loaded, guessHistory}) {
                         </td>
                     </tr>
                 </thead>
-                <tbody className={styles.body}>
+                <tbody ref={tableScroll} className={styles.body} onScroll={e => onTableScroll(e)}>
                     {!loaded &&
                         <tr className={styles.message}>
                             <td>

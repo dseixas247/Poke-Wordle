@@ -24,6 +24,10 @@ html, body, div#root {
   border-radius: 8px;
 }
 
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 .App {
   height: 100%;
   display: flex;

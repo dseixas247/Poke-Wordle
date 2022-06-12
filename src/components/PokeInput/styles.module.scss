@@ -12,8 +12,8 @@
     caret-color: black;
     outline: none;
     background-color: rgba(255, 255, 255, 0.6);
-    border: 2px solid black;
-    border-top: 1px solid black;
+    border: 3px solid white;
+    border-top: 1px solid white;
     border-radius: 0px 0px 4px 4px;
 }
 
@@ -26,7 +26,7 @@
     color: white;
     font-weight: bold;
     background-color: red;
-    border: 2px solid black;
+    border: 3px solid white;
     border-radius: 4px 4px 4px 4px;
 
     transition: all 1s;
@@ -45,13 +45,13 @@
 
 .inactive {
     color: rgba(255, 255, 255, 0.4);
-    border: 2px solid rgba(0, 0, 0, 0.4);
+    border: 3px solid rgba(0, 0, 0, 0.4);
     background-color: rgba(128, 128, 128, 0.4);
 }
 
 .inactive:hover, .inactive:active {
     cursor: default;
-    border: 2px solid rgba(0, 0, 0, 0.4);
+    border: 3px solid rgba(0, 0, 0, 0.4);
     background-color: rgba(128, 128, 128, 0.4);
 }
 
@@ -61,9 +61,8 @@
 
 .suggested table {
     background-color: rgba(128, 128, 128, 0.6);
-    border: 2px solid black;
+    border: 3px solid white;
     border-radius: 5px 5px 0px 0px;
-    padding-right: 2px;
 }
 
 .suggested table, thead {
@@ -83,7 +82,7 @@
     height: 29vh;
     width: 100%;
     overflow-y: scroll;
-    overflow-x: hidden;
+    overflow-x: auto;
     padding-right: 1px;
 }
 

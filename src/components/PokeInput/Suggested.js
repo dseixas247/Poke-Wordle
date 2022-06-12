@@ -1,9 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import styles from './styles.module.scss';
 
 import TypeIcon from '../TypeIcon/index.js';
 
 function Suggested({loaded, input, content, updateInputPokemon}) {
+
+    const headerScroll = useRef();
+    const tableScroll = useRef();
+
+    const onTableScroll = e => {
+        headerScroll.current.scrollLeft = e.target.scrollLeft;
+    }
 
     const suggestedContent = content.map((item, key) => {
         var name = "";
@@ -57,7 +64,7 @@ function Suggested({loaded, input, content, updateInputPokemon}) {
     return(
         <div className={styles.suggested}>
                 <table>
-                    <thead className={styles.head}>
+                    <thead ref={headerScroll} className={styles.head}>
                         <tr>
                             <td>
                                 Pokemon
@@ -85,7 +92,7 @@ function Suggested({loaded, input, content, updateInputPokemon}) {
                             </td>
                         </tr>
                     </thead>
-                    <tbody className={styles.body}>
+                    <tbody ref={tableScroll} className={styles.body} onScroll={e => onTableScroll(e)}>
                         {!loaded && 
                             <tr className={styles.loading}>
                                 <td>

@@ -2,6 +2,7 @@
     background-color: rgba(128, 128, 128, 0.6);
     border: 3px solid white;
     border-radius: 5px;
+    padding: 2px 0px 0px 2px;
 }
 
 .guessTable table, thead {
@@ -18,7 +19,7 @@
 .guessTable tbody {
     display: flex;
     flex-direction: column;
-    height: 43vh;
+    height: 40vh;
     width: 100%;
     overflow-y: scroll;
     overflow-x: auto;

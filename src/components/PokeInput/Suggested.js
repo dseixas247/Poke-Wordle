@@ -67,7 +67,7 @@ function Suggested({loaded, input, content, updateInputPokemon}) {
                     <thead ref={headerScroll} className={styles.head}>
                         <tr>
                             <td>
-                                Pokemon
+                                Pokémon
                             </td>
                             <td>
                                 Type
@@ -103,7 +103,7 @@ function Suggested({loaded, input, content, updateInputPokemon}) {
                         {(loaded && input && content.length == 0) && 
                             <tr className={styles.message}>
                                 <td>
-                                    no pokemon found with that name
+                                    No Pokémon found with that name.
                                 </td>
                             </tr>
                         }

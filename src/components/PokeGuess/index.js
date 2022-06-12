@@ -66,7 +66,7 @@ function PokeGuess({loaded, guessHistory}) {
                 <thead ref={headerScroll} className={styles.head}>
                     <tr>
                         <td>
-                            Pokemon
+                            Pokémon
                         </td>
                         <td>
                             Gen
@@ -101,14 +101,14 @@ function PokeGuess({loaded, guessHistory}) {
                     {!loaded &&
                         <tr className={styles.message}>
                             <td>
-                                Wait for the application to load all pokemon data
+                                Retrieving Pokémon Data. <br/> This can take up to a minute.
                             </td>
                         </tr>
                     }
                     {(content.length == 0 && loaded) && 
                         <tr className={styles.message}>
                             <td>
-                                Start guessing the pokemon we're looking for
+                                Start guessing for the Pokémon we're looking for.
                             </td>
                         </tr>
                     }

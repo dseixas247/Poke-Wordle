@@ -7,11 +7,11 @@
     font-size: 20px;
     font-weight: bold;
     color: white;
-    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 #000, 1px 1px 0 black;
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
     text-align: center;
     caret-color: black;
     outline: none;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: white;
     border: 3px solid white;
     border-top: 1px solid white;
     border-radius: 0px 0px 4px 4px;
@@ -45,14 +45,17 @@
 
 .inactive {
     color: rgba(255, 255, 255, 0.4);
-    border: 3px solid rgba(0, 0, 0, 0.4);
-    background-color: rgba(128, 128, 128, 0.4);
+    text-shadow: none;
+    border: 3px solid rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 0, 0, 0.2);
 }
 
 .inactive:hover, .inactive:active {
     cursor: default;
-    border: 3px solid rgba(0, 0, 0, 0.4);
-    background-color: rgba(128, 128, 128, 0.4);
+    color: rgba(255, 255, 255, 0.4);
+    text-shadow: none;
+    border: 3px solid rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 0, 0, 0.2);
 }
 
 .suggested {
@@ -63,6 +66,7 @@
     background-color: rgba(128, 128, 128, 0.6);
     border: 3px solid white;
     border-radius: 5px 5px 0px 0px;
+    padding: 2px 0px 0px 2px;
 }
 
 .suggested table, thead {

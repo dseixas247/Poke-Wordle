@@ -42,7 +42,7 @@ function App() {
 
   useEffect(() => {
     if(loaded){
-      getPokemonData(pokemonList[Math.floor(Math.random() * pokemonList.length)].name).then(res => {updateHiddenPokemon(res)});
+      updateHiddenPokemon(pokemonList[149])//pokemonList[Math.floor(Math.random() * pokemonList.length)]);
     }
   }, [loaded]);
 
@@ -88,7 +88,6 @@ function App() {
                     || item.name.includes("shaymin")
                     || item.name.includes("giratina")
                     || item.name.includes("rotom")
-                    || item.name.includes("castform")
                     || item.name.includes("meloetta")
                     || item.name.includes("oricorio")
                     || item.name.includes("lycanroc")

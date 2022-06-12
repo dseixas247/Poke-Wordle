@@ -148,9 +148,16 @@
     line-height: 12px;
 }
 
+@media screen and (max-width: 1223.5px) {
+    .pokemon {
+        font-size: 12px;
+    }
+}
+
 .pokemon img {
     height: 75px;
     object-fit: contain;
+    margin: -4px;
 }
 
 .message, .loading {

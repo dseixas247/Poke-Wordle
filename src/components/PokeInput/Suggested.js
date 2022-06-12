@@ -27,32 +27,32 @@ function Suggested({loaded, input, content, updateInputPokemon}) {
         return(
             <tr key={key} onClick={() => updateInputPokemon(item.name)}>
                 <td className={styles.pokemon}>
-                    <img src={item.sprites.front_default}/>
+                    <img src={item.sprite}/>
                     {name}
                 </td>
                 <td>
                     <div className={styles.types}>
-                        <TypeIcon type={item.types[0].type.name}/>
-                        {item.types.length == 2 && <TypeIcon type={item.types[1].type.name}/>}
+                        <TypeIcon type={item.type1}/>
+                        {item.type1 != item.type2 && <TypeIcon type={item.type2}/>}
                     </div>
                 </td>
                 <td>
-                    {item.stats[0].base_stat}
+                    {item.stats.hp}
                 </td>
                 <td>
-                    {item.stats[1].base_stat}
+                    {item.stats.attack}
                 </td>
                 <td>
-                    {item.stats[2].base_stat}
+                    {item.stats.defense}
                 </td>
                 <td>
-                    {item.stats[3].base_stat}
+                    {item.stats.spattack}
                 </td>
                 <td>
-                    {item.stats[4].base_stat}
+                    {item.stats.spdefense}
                 </td>
                 <td>
-                    {item.stats[5].base_stat}
+                    {item.stats.speed}
                 </td>
             </tr>
         );

@@ -24,7 +24,7 @@ function App() {
   }, [hiddenPokemon]);
 
   const updateInputPokemon = useCallback((pokemon) => {
-    var str = pokemon.replace(/[013456789`~!@#$%^&*()_|+\=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+    var str = pokemon.replace(/[`~!@#$%^&*()_|+\=?;'",<>\{\}\[\]\\\/]/gi, '');
     setInputPokemon(str);
   }, [inputPokemon]);
 
@@ -34,14 +34,10 @@ function App() {
 
   const updateGuessHistory = useCallback((guessedPokemon, pokemon) => {
     var history = guessHistory;
-    getPokemonData(guessedPokemon).then(res => {
-      if(res != undefined){
-        history.push(comparePokemon(res, pokemon));
-        updateGuesses();
-        setGuessHistory(history);
-        updateInputPokemon("");
-      }
-    });
+    history.push(comparePokemon(guessedPokemon, pokemon));
+    updateGuesses();
+    setGuessHistory(history);
+    updateInputPokemon("");
   }, [guessHistory])
 
   useEffect(() => {
@@ -70,7 +66,7 @@ function App() {
             for (const item of all){
                 if(
                     !item.name.includes("-") 
-                    || item.name.endsWith("-alola")
+                    || (item.name.endsWith("-alola") && !item.name.includes("-totem"))
                     || item.name.includes("-galar")
                     || item.name.includes("-mega")
                     || item.name.includes("-primal")
@@ -107,7 +103,7 @@ function App() {
                     || item.name.includes("indeedee")
                     || item.name.includes("-red")
                     || item.name.includes("tapu")
-                    || item.name.includes("o-o")
+                    || item.name.includes("Ho-oh")
                     || item.name.includes("mime")
                     || item.name.includes("mr-rime")
                     || item.name.includes("porygon")
@@ -116,9 +112,9 @@ function App() {
                     || item.name.includes("type-null")
                     || item.name.endsWith("-belly")
                 ){
-                    await axios.get(item.url)
+                    await getPokemonData(item.name)
                     .then(function (res){
-                        list.push(res.data);
+                        list.push(res);
                     })
                     .catch(function (e){
                         console.log(e);
@@ -172,7 +168,7 @@ function App() {
           error = true;
         });
     
-    await axios.get('https://pokeapi.co/api/v2/pokemon-species/' + `${Pokemon.split("-")[0] != "nidoran" ? Pokemon.split("-")[0] : Pokemon}`)
+    await axios.get('https://pokeapi.co/api/v2/pokemon-species/' + `${Pokemon == 'mr-mime-galar' ? Pokemon.split('-galar')[0] : Pokemon.split("-")[0]}`)
         .then(function (res) {
             gen = res.data.generation.name;
             switch(gen){
@@ -186,9 +182,25 @@ function App() {
               case "generation-viii": gen = 8; break;
             }
         })
-        .catch(function (e){
-          console.log(e);
-          error = true;
+        .catch(async function (e){
+          await axios.get('https://pokeapi.co/api/v2/pokemon-species/' + Pokemon)
+            .then(function (res) {
+                gen = res.data.generation.name;
+                switch(gen){
+                  case "generation-i": gen = 1; break;
+                  case "generation-ii": gen = 2; break;
+                  case "generation-iii": gen = 3; break;
+                  case "generation-iv": gen = 4; break;
+                  case "generation-v": gen = 5; break;
+                  case "generation-vi": gen = 6; break;
+                  case "generation-vii": gen = 7; break;
+                  case "generation-viii": gen = 8; break;
+                }
+            })
+            .catch(function (e){
+              console.log(e);
+              error = true;
+            });
         });
 
     if(!error){

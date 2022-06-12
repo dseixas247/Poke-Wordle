@@ -7,8 +7,6 @@ import PokeInput from './components/PokeInput';
 function App() {
   const [background, setBackground] = useState(Math.floor(Math.random() * 9)+55);
 
-  console.log(background)
-
   const [loaded, setLoaded] = useState(false);
 
   const [pokemonList, setPokemonList] = useState([]);
@@ -38,7 +36,6 @@ function App() {
     var history = guessHistory;
     getPokemonData(guessedPokemon).then(res => {
       if(res != undefined){
-        console.log(res);
         history.push(comparePokemon(res, pokemon));
         updateGuesses();
         setGuessHistory(history);
@@ -296,8 +293,6 @@ function App() {
       });
     }
   }
-
-  console.log(hiddenPokemon);
 
   return (
     <div className="App" style={{backgroundImage: `url('https://tcg.pokemon.com/assets/img/home/wallpapers/wallpaper-${background}.jpg')`}}>

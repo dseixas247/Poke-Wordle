@@ -42,7 +42,7 @@ function App() {
 
   useEffect(() => {
     if(loaded){
-      updateHiddenPokemon(pokemonList[149])//pokemonList[Math.floor(Math.random() * pokemonList.length)]);
+      updateHiddenPokemon(pokemonList[Math.floor(Math.random() * pokemonList.length)]);
     }
   }, [loaded]);
 
@@ -308,6 +308,8 @@ function App() {
   return (
     <div className="App" style={{backgroundImage: `url('https://tcg.pokemon.com/assets/img/home/wallpapers/wallpaper-${background}.jpg')`}}>
       <div className='Content'>
+        <div className="Title">Poké-Wordle</div>
+        <div className="Info">i</div>
         <PokeGuess
         loaded={loaded}
         guessHistory={guessHistory}

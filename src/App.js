@@ -49,17 +49,37 @@ function App() {
   }, [loaded]);
 
   useEffect(() => {
+    const getStorage = async() => {
+      var storage = {
+        pokemonList: JSON.parse(localStorage.getItem("pokemonList"))
+      }
+      
+      return Promise.resolve(storage);
+    }
+
     const getAll = async() => {
-        await axios.get('https://pokeapi.co/api/v2/pokemon?limit=1126')
+        await getStorage()
         .then(async function (res){
-            await getData(res.data.results).then(res => {
-                setPokemonList(res);
-                setLoaded(true);
+          if(res.pokemonList == null){
+            await axios.get('https://pokeapi.co/api/v2/pokemon?limit=1126')
+            .then(async function (res){
+                await getData(res.data.results).then(res => {
+                    setPokemonList(res);
+                    setLoaded(true);
+                    localStorage.setItem("pokemonList", JSON.stringify(res));
+                });
+            })
+            .catch(function (e){
+                console.log(e);
             });
+          }
+          else{
+            setPokemonList(res.pokemonList);
+            setTimeout(function (){
+              setLoaded(true);
+            }, 1000);
+          }
         })
-        .catch(function (e){
-            console.log(e);
-        });
     }
 
     const getData = async(all) => {
@@ -123,11 +143,11 @@ function App() {
                 }
             };   
         }
-        return(list);
+        return Promise.resolve(list);
     } 
 
-    getAll()
-    
+    getAll();
+      
 }, [1]);
 
   const axios = require('axios');

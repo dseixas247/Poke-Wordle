@@ -69,7 +69,7 @@ html, body, div#root {
   height: 25px;
 }
 
-.Info {
+.InfoButton {
   position: absolute;
   top: 2px;
   right: 2vw;
@@ -79,9 +79,69 @@ html, body, div#root {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  height: 25px;
-  width: 25px;
+  height: 26px;
+  width: 26px;
   border: 3px solid white;
   border-radius: 5px;
   background-color: red;
+}
+
+.InfoButton.close {
+  height: 20px;
+  width: 26px;
+  padding-bottom: 6px;
+}
+
+.InfoButton:hover {
+  cursor: pointer;
+  background-color: rgb(228, 32, 32);
+  transition: background-color 1s;
+}
+
+.InfoButton:active {
+  background-color: rgb(180, 0, 0);
+  transition: none;
+}
+
+.Info {
+  position: absolute;
+  top: 8vh;
+  right: 8vw;
+  color: black;
+  font-weight: bolder;
+  text-shadow: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 84vh;
+  width: 84vw;
+  border: 5px solid red;
+  outline: 5px solid rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 2;
+  overflow-y: auto;
+}
+
+.Info h1, h2{
+  border-bottom: 5px solid black;
+  margin: 10px 0px;
+}
+
+.InfoText {
+  width: 75vw;
+  border-bottom: 5px solid black;
+  padding: 0px 0px 10px;
+}
+
+.InfoTextEnd {
+  padding: 0px 0px 10px;
+}
+
+.InfoText img, .InfoTextEnd img {
+  padding: 10px 0px 0px 0px;
+}
+
+.hidden {
+  display: none;
 }

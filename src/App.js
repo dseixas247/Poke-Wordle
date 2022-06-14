@@ -7,6 +7,8 @@ import PokeInput from './components/PokeInput';
 function App() {
   const [background, setBackground] = useState(Math.floor(Math.random() * 9)+55);
 
+  const [infoOpen, setInfoOpen] = useState(false);
+
   const [loaded, setLoaded] = useState(false);
 
   const [pokemonList, setPokemonList] = useState([]);
@@ -308,12 +310,54 @@ function App() {
   return (
     <div className="App" style={{backgroundImage: `url('https://tcg.pokemon.com/assets/img/home/wallpapers/wallpaper-${background}.jpg')`}}>
       <div className='Content'>
+        
         <div className="Title">Poké-Wordle</div>
-        <div className="Info">i</div>
+
+        <div className={`InfoButton ${infoOpen ? "close" : ""}`} onClick={() => setInfoOpen(!infoOpen)}>{infoOpen ? 'x' : 'i'}</div>
+        <div className={`${infoOpen ? "Info" : "hidden"}`}>
+          <h1>How To Play</h1>
+          <h2>Objective of the game</h2>
+          <div className="InfoText">
+            The objective of the game is to find out which Pokémon we're searching for by guessing. <br/>
+            Each guess you get feedback and with it closer to the Pokémon we want. <br/>
+            The searched Pokemon can be a regional form or a mega or even an alternate form. <br/>
+            (alternate forms which don't change typing or stats from the original are not included)
+          </div>
+          <h2>Guessing a Pokémon</h2>
+          <div className="InfoText">
+            You can look for Pokémon in the list or by typing it's name. <br/>
+            The list filters as you start writing a name and you can also filter the list <br/> by generation, type or a stat by typing: <br/><br/>
+            gen:(number from 1 to 8) ex.: gen:1 <br/>
+            type:(name of type) ex.: type:electric <br/>
+            (name of stat):(positive number) ex.: sp.atk:50 <br/><br/>
+            Once you have chosen a valid Pokémon just click submit. 
+          </div>
+          <h2>Interpreting your guesses</h2>
+          <div className="InfoText">
+            After submitting a Pokémon the game will give you hints depending on <br/> how the Pokémon you submitted compares to the Pokémon that is being searched. 
+          </div>
+          <div className="InfoText">
+            <img src='/RightSymbol.png'/> <br/> the Pokémon searched for has the same value as the one submitted. 
+          </div>
+          <div className="InfoText">
+            <img src='/HigherSymbol.png'/> <br/> the Pokémon searched for has a numerically higher value as the one submitted. 
+          </div>
+          <div className="InfoText">
+            <img src='/LowerSymbol.png'/> <br/> the Pokémon searched for has a numerically lower value as the one submitted. 
+          </div>
+          <div className="InfoText">
+            <img src='/FalseSymbol.png'/> <br/> the Pokémon searched for has a different type as the one submitted.
+          </div>
+          <div className='InfoTextEnd'>
+            <img src='/InsideSymbol.png'/> <br/> the Pokémon searched for has the same typing <br/> but on a different position as the one submitted. <br/> (primary and secondary type)
+          </div>
+        </div>
+
         <PokeGuess
         loaded={loaded}
         guessHistory={guessHistory}
         />
+
         <PokeInput
           loaded={loaded}
           pokemonList={pokemonList}
@@ -322,6 +366,7 @@ function App() {
           updateInputPokemon={updateInputPokemon}
           updateGuessHistory={updateGuessHistory}
         />
+
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import styles from './styles.module.scss';
 import GuessIcon from '../GuessIcon/index.js';
 
-function PokeGuess({loaded, guessHistory}) {
+function PokeGuess({loaded, guesses}) {
 
     const headerScroll = useRef();
     const tableScroll = useRef(); 
@@ -15,7 +15,7 @@ function PokeGuess({loaded, guessHistory}) {
         tableScroll.current.scrollTop = tableScroll.current.scrollHeight;
     });
     
-    const content = guessHistory.map((item, key) =>{
+    const content = guesses.map((item, key) =>{
         var name = "";
         var names = item.pokemon.split('-');
         

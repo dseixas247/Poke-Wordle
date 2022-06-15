@@ -17,142 +17,155 @@ function App() {
 
   const [inputPokemon, setInputPokemon] = useState('');
 
-  const [guesses, setGuesses] = useState(0);
-
-  const [guessHistory, setGuessHistory] = useState([]);
-
-  const updateHiddenPokemon = useCallback((pokemon) => {
-    setHiddenPokemon(pokemon);
-  }, [hiddenPokemon]);
+  const [guesses, setGuesses] = useState([]);
 
   const updateInputPokemon = useCallback((pokemon) => {
     var str = pokemon.replace(/[`~!@#$%^&*()_|+\=?;'",<>\{\}\[\]\\\/]/gi, '');
     setInputPokemon(str);
   }, [inputPokemon]);
 
-  const updateGuesses = useCallback(() => {
-    setGuesses(guesses + 1);
-  }, [guesses]);
-
-  const updateGuessHistory = useCallback((guessedPokemon, pokemon) => {
-    var history = guessHistory;
+  const updateGuesses = useCallback(async (guessedPokemon, pokemon) => {
+    var history = guesses;
     history.push(comparePokemon(guessedPokemon, pokemon));
-    updateGuesses();
-    setGuessHistory(history);
+    setGuesses(history);
     updateInputPokemon("");
-  }, [guessHistory])
+    localStorage.setItem("guesses", JSON.stringify(history));
+  }, [guesses])
 
   useEffect(() => {
-    if(loaded){
-      updateHiddenPokemon(pokemonList[Math.floor(Math.random() * pokemonList.length)]);
-    }
-  }, [loaded]);
-
-  useEffect(() => {
-    const getStorage = async() => {
-      var storage = {
-        pokemonList: JSON.parse(localStorage.getItem("pokemonList"))
-      }
-      
-      return Promise.resolve(storage);
-    }
-
-    const getAll = async() => {
-        await getStorage()
-        .then(async function (res){
-          if(res.pokemonList == null){
-            await axios.get('https://pokeapi.co/api/v2/pokemon?limit=1126')
-            .then(async function (res){
-                await getData(res.data.results).then(res => {
-                    setPokemonList(res);
-                    setLoaded(true);
-                    localStorage.setItem("pokemonList", JSON.stringify(res));
-                });
-            })
-            .catch(function (e){
-                console.log(e);
-            });
-          }
-          else{
-            setPokemonList(res.pokemonList);
-            setTimeout(function (){
-              setLoaded(true);
-            }, 1000);
-          }
-        })
-    }
-
-    const getData = async(all) => {
-        var list = []
-        if(all.length > 0){
-            for (const item of all){
-                if(
-                    !item.name.includes("-") 
-                    || (item.name.endsWith("-alola") && !item.name.includes("-totem"))
-                    || item.name.includes("-galar")
-                    || item.name.includes("-mega")
-                    || item.name.includes("-primal")
-                    || item.name.includes("deoxys")
-                    || item.name.includes("calyrex")
-                    || item.name.includes("eiscue")
-                    || item.name.includes("hoopa")
-                    || item.name.includes("-complete")
-                    || item.name.includes("-crowned")
-                    || item.name.includes("darmanitan")
-                    || item.name.includes("necrozma")
-                    || item.name.includes("kyurem")
-                    || item.name.includes("-average")
-                    || item.name.includes("keldeo")
-                    || item.name.includes("aegislash")
-                    || item.name.includes("-therian")
-                    || item.name.includes("-incarnate")
-                    || item.name.includes("wormadam")
-                    || item.name.includes("shaymin")
-                    || item.name.includes("giratina")
-                    || item.name.includes("rotom")
-                    || item.name.includes("meloetta")
-                    || item.name.includes("oricorio")
-                    || item.name.includes("lycanroc")
-                    || item.name.includes("wishiwashi")
-                    || item.name.includes("eiscue")
-                    || item.name.endsWith("-strike")
-                    || item.name.endsWith("u-disguised")
-                    || item.name.includes("nidoran")
-                    || item.name.endsWith("-50")
-                    || item.name.includes("-10-")
-                    || item.name.endsWith("-amped")
-                    || item.name.includes("indeedee")
-                    || item.name.includes("-red")
-                    || item.name.includes("tapu")
-                    || item.name.includes("Ho-oh")
-                    || item.name.includes("mime")
-                    || item.name.includes("mr-rime")
-                    || item.name.includes("porygon")
-                    || item.name.includes("-crowned")
-                    || item.name.includes("meowstic-male")
-                    || item.name.includes("type-null")
-                    || item.name.endsWith("-belly")
-                ){
-                    await getPokemonData(item.name)
-                    .then(function (res){
-                        list.push(res);
-                    })
-                    .catch(function (e){
-                        console.log(e);
-                    });
-                }
-            };   
-        }
-        return Promise.resolve(list);
-    } 
-
     getAll();
-      
-}, [1]);
+  }, [1]);
+
+  useEffect(() => {
+    
+    getHiddenPokemon();
+  }, [loaded]);
 
   const axios = require('axios');
 
-  async function getPokemonData(Pokemon) {
+  const getStorage = async() => {
+    var storage = {
+      pokemonList: JSON.parse(localStorage.getItem("pokemonList")),
+      guesses: JSON.parse(localStorage.getItem("guesses")),
+      hiddenPokemon: JSON.parse(localStorage.getItem("hiddenPokemon"))
+    }
+    
+    return Promise.resolve(storage);
+  }
+
+  const getAll = async() => {
+      await getStorage()
+      .then(async function (res){
+        if(res.pokemonList == null){
+          await axios.get('https://pokeapi.co/api/v2/pokemon?limit=1126')
+          .then(async function (res){
+              await getData(res.data.results)
+              .then(res => {
+                  setPokemonList(res);
+                  setLoaded(true);
+                  localStorage.setItem("pokemonList", JSON.stringify(res));
+              });
+          })
+          .catch(function (e){
+              console.log(e);
+          });
+        }
+        else{
+          setPokemonList(res.pokemonList);
+          setTimeout(function (){
+            setLoaded(true);
+          }, 1000);
+        }
+
+        if(res.guesses != null){
+          setTimeout(function (){
+            setGuesses(res.guesses);
+          }, 1000);
+        }
+      })
+  }
+
+  const getData = async(all) => {
+      var list = []
+      if(all.length > 0){
+          for (const item of all){
+              if(
+                  !item.name.includes("-") 
+                  || (item.name.endsWith("-alola") && !item.name.includes("-totem"))
+                  || item.name.includes("-galar")
+                  || item.name.includes("-mega")
+                  || item.name.includes("-primal")
+                  || item.name.includes("deoxys")
+                  || item.name.includes("calyrex")
+                  || item.name.includes("eiscue")
+                  || item.name.includes("hoopa")
+                  || item.name.includes("-complete")
+                  || item.name.includes("-crowned")
+                  || item.name.includes("darmanitan")
+                  || item.name.includes("necrozma")
+                  || item.name.includes("kyurem")
+                  || item.name.includes("-average")
+                  || item.name.includes("keldeo")
+                  || item.name.includes("aegislash")
+                  || item.name.includes("-therian")
+                  || item.name.includes("-incarnate")
+                  || item.name.includes("wormadam")
+                  || item.name.includes("shaymin")
+                  || item.name.includes("giratina")
+                  || item.name.includes("rotom")
+                  || item.name.includes("meloetta")
+                  || item.name.includes("oricorio")
+                  || item.name.includes("lycanroc")
+                  || item.name.includes("wishiwashi")
+                  || item.name.includes("eiscue")
+                  || item.name.endsWith("-strike")
+                  || item.name.endsWith("u-disguised")
+                  || item.name.includes("nidoran")
+                  || item.name.endsWith("-50")
+                  || item.name.includes("-10-")
+                  || item.name.endsWith("-amped")
+                  || item.name.includes("indeedee")
+                  || item.name.includes("-red")
+                  || item.name.includes("tapu")
+                  || item.name.includes("Ho-oh")
+                  || item.name.includes("mime")
+                  || item.name.includes("mr-rime")
+                  || item.name.includes("porygon")
+                  || item.name.includes("-crowned")
+                  || item.name.includes("meowstic-male")
+                  || item.name.includes("type-null")
+                  || item.name.endsWith("-belly")
+              ){
+                  await getPokemonData(item.name)
+                  .then(function (res){
+                      list.push(res);
+                  })
+                  .catch(function (e){
+                      console.log(e);
+                  });
+              }
+          };   
+      }
+      return Promise.resolve(list);
+  } 
+
+  const getHiddenPokemon = async() => {
+    if(loaded){
+      await getStorage()
+      .then(function (res){
+        if(res.hiddenPokemon != null){
+          setHiddenPokemon(res.hiddenPokemon);
+        }
+        else{
+          const pokemon = pokemonList[Math.floor(Math.random() * pokemonList.length)];
+          setHiddenPokemon(pokemon);
+          localStorage.setItem("hiddenPokemon", JSON.stringify(pokemon));
+        }
+      })
+    }
+  }
+
+  const getPokemonData = async(Pokemon) => {
     var error = false;
 
     var name = '';
@@ -327,6 +340,8 @@ function App() {
     }
   }
 
+  console.log(hiddenPokemon);
+
   return (
     <div className="App" style={{backgroundImage: `url('https://tcg.pokemon.com/assets/img/home/wallpapers/wallpaper-${background}.jpg')`}}>
       <div className='Content'>
@@ -375,7 +390,7 @@ function App() {
 
         <PokeGuess
         loaded={loaded}
-        guessHistory={guessHistory}
+        guesses={guesses}
         />
 
         <PokeInput
@@ -384,7 +399,7 @@ function App() {
           pokemon={hiddenPokemon}
           inputPokemon={inputPokemon}
           updateInputPokemon={updateInputPokemon}
-          updateGuessHistory={updateGuessHistory}
+          updateGuesses={updateGuesses}
         />
 
       </div>

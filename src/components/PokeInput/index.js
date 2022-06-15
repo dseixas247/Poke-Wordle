@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 
 import Suggested from './Suggested';
 
-function PokeInput({loaded, pokemonList, pokemon, inputPokemon, updateInputPokemon, updateGuessHistory}) {
+function PokeInput({loaded, pokemonList, pokemon, inputPokemon, updateInputPokemon, updateGuesses}) {
 
     const input = useRef();
 
@@ -100,7 +100,7 @@ function PokeInput({loaded, pokemonList, pokemon, inputPokemon, updateInputPokem
             <Suggested loaded={loaded} input={inputPokemon.length != 0} content={suggestions} updateInputPokemon={updateInputPokemon}/>
                 
             <input ref={input} className={styles.input} type='text' value={inputPokemon} onChange={e => updateInputPokemon(e.target.value)}/>
-            <div className={`${styles.button} ${!validInput || pokemon == undefined ? styles.inactive : ""}`} onClick={() => {if(validInput && pokemon != undefined){updateGuessHistory(suggestions[0], pokemon)}}}>Submit</div>
+            <div className={`${styles.button} ${!validInput || pokemon == undefined ? styles.inactive : ""}`} onClick={() => {if(validInput && pokemon != undefined){updateGuesses(suggestions[0], pokemon)}}}>Submit</div>
         </div>
         
     )

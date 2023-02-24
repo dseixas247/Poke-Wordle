@@ -57,7 +57,7 @@ function App() {
       await getStorage()
       .then(async function (res){
         if(res.pokemonList == null){
-          await axios.get('https://pokeapi.co/api/v2/pokemon?limit=1126')
+          await axios.get('https://pokeapi.co/api/v2/pokemon?limit=1279')
           .then(async function (res){
               await getData(res.data.results)
               .then(res => {
@@ -214,6 +214,7 @@ function App() {
               case "generation-vi": gen = 6; break;
               case "generation-vii": gen = 7; break;
               case "generation-viii": gen = 8; break;
+              case "generation-ix": gen = 9; break;
             }
         })
         .catch(async function (e){
@@ -229,6 +230,7 @@ function App() {
                   case "generation-vi": gen = 6; break;
                   case "generation-vii": gen = 7; break;
                   case "generation-viii": gen = 8; break;
+                  case "generation-ix": gen = 9; break;
                 }
             })
             .catch(function (e){
